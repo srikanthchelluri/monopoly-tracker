@@ -76,7 +76,7 @@ public class money {
 			current += amount;
 			players.put(pad(to), current);
 			getStatus();
-			System.out.println("Bank tranferred $" + amount + " to " + to + ".");
+			System.out.println("Bank transferred $" + amount + " to " + to + ".");
 		} else if (to.equals("bank")) {
 			int current = players.get(pad(from));
 			current -= amount;
@@ -86,7 +86,7 @@ public class money {
 			}
 			players.put(pad(from), current);
 			getStatus();
-			System.out.println(from + " tranferred $" + amount + " to bank.");
+			System.out.println(from + " transferred $" + amount + " to bank.");
 		} else {
 			int fromPlayer = players.get(pad(from));
 			fromPlayer -= amount;
@@ -99,7 +99,7 @@ public class money {
 			toPlayer += amount;
 			players.put(pad(to), toPlayer);
 			getStatus();
-			System.out.println(from + " tranferred $" + amount + " to " + to + ".");
+			System.out.println(from + " transferred $" + amount + " to " + to + ".");
 		}
 
 		System.out.println();
