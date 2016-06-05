@@ -27,8 +27,9 @@ public class money {
 			setupSettings();
 			return;
 		}
-		System.out.print("Show status (yes, no)? ");
+		System.out.print("Show holdings on every transaction (yes, no)? ");
 		showStatus = in.nextLine().equals("yes") ? true : false;
+		if (!showStatus) System.out.println("Use 'status' instead to check holdings.");
 	}
 
 	public static void setupPlayers() {
@@ -42,9 +43,9 @@ public class money {
 			players.put(name, startValue);
 		}
 		int count = players.keySet().size();
-		System.out.println("You have " + count + " players.");
+		System.out.println("You have " + count + " players. Bank automatically added (use 'bank').");
 		getStatus();
-		System.out.println("Type 'quit' to quit anytime. Type 'status' to see a player's holdings. Let's start!");
+		System.out.println("Type 'quit' to quit; 'status' to see a player's holdings. Let's start!");
 		System.out.println();
 	}
 
@@ -93,13 +94,13 @@ public class money {
 			return;
 		}
 
-		if (from.equals("bank")) {
+		if (from.equals("bank") || from.equals("Bank")) {
 			int current = players.get(pad(to));
 			current += amount;
 			players.put(pad(to), current);
 			if (showStatus) getStatus();
 			System.out.println("Bank transferred $" + amount + " to " + to + ".");
-		} else if (to.equals("bank")) {
+		} else if (to.equals("bank") || to.equals("Bank")) {
 			int current = players.get(pad(from));
 			current -= amount;
 			if (current < 0) {
