@@ -82,6 +82,7 @@ public class money {
 			current -= amount;
 			if (current < 0) {
 				System.out.println(from + " is BANKRUPT.");
+				getStatus();
 				System.exit(0);
 			}
 			players.put(pad(from), current);
@@ -92,6 +93,7 @@ public class money {
 			fromPlayer -= amount;
 			if (fromPlayer < 0) {
 				System.out.println(from + " is BANKRUPT.");
+				getStatus();
 				System.exit(0);
 			}
 			players.put(pad(from), fromPlayer);
