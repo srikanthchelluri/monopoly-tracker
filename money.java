@@ -6,16 +6,32 @@ import java.util.*;
 public class money {
 	public static HashMap<String, Integer> players = new HashMap<String, Integer>();
 	public static Scanner in = new Scanner(System.in);
+	public static int startValue;
+	public static boolean showStatus;
 
 	public static void main(String args[]) {
+		System.out.println("This is a simple program to track cash flow in Monopoly.");
+		setupSettings();
 		setupPlayers();
 		while (true) {
 			getAttributes();
 		}
 	}
 
+	public static void setupSettings() {
+		System.out.print("Everyone starts with how much? ");
+		try {
+			startValue = Integer.parseInt(in.nextLine());
+		} catch (Exception e) {
+			System.out.println("Not a valid amount.");
+			setupSettings();
+			return;
+		}
+		System.out.print("Show status (yes, no)? ");
+		showStatus = in.nextLine().equals("yes") ? true : false;
+	}
+
 	public static void setupPlayers() {
-		System.out.println("This is a simple program to track cash flow in Monopoly.");
 		System.out.println("Enter each player's name, separated by a new line.");
 		while (true) {
 			String input = in.nextLine();
@@ -23,34 +39,40 @@ public class money {
 				break;
 			String name = input;
 			name = pad(name);
-			players.put(name, 1500);
+			players.put(name, startValue);
 		}
 		int count = players.keySet().size();
 		System.out.println("You have " + count + " players.");
 		getStatus();
-		System.out.println("Let's start!");
+		System.out.println("Type 'quit' to quit anytime. Type 'status' to see a player's holdings. Let's start!");
 		System.out.println();
 	}
 
 	public static void getAttributes() {
 		System.out.print("Money from? ");
-		String from = in.next();
+		String from = in.nextLine();
 		if (from.equals("quit")) {
 			getStatus();
 			System.exit(0);
+		} else if (from.equals("status")) {
+			getPlayerStatus();
+			return;
 		}
 		System.out.print("Money to? ");
-		String to = in.next();
+		String to = in.nextLine();
 		if (to.equals("quit")) {
 			getStatus();
 			System.exit(0);
+		} else if (to.equals("status")) {
+			getPlayerStatus();
+			return;
 		}
 		System.out.print("How much? ");
 		try {
-			int amount = Integer.parseInt(in.next());
+			int amount = Integer.parseInt(in.nextLine());
 			transfer(from, to, amount);
 		} catch (Exception e) {
-			System.out.println("Not a valid number.");
+			System.out.println("Not a valid amount.");
 			System.out.println();
 			getAttributes();
 			return;
@@ -75,7 +97,7 @@ public class money {
 			int current = players.get(pad(to));
 			current += amount;
 			players.put(pad(to), current);
-			getStatus();
+			if (showStatus) getStatus();
 			System.out.println("Bank transferred $" + amount + " to " + to + ".");
 		} else if (to.equals("bank")) {
 			int current = players.get(pad(from));
@@ -86,7 +108,7 @@ public class money {
 				System.exit(0);
 			}
 			players.put(pad(from), current);
-			getStatus();
+			if (showStatus) getStatus();
 			System.out.println(from + " transferred $" + amount + " to bank.");
 		} else {
 			int fromPlayer = players.get(pad(from));
@@ -100,7 +122,7 @@ public class money {
 			int toPlayer = players.get(pad(to));
 			toPlayer += amount;
 			players.put(pad(to), toPlayer);
-			getStatus();
+			if (showStatus) getStatus();
 			System.out.println(from + " transferred $" + amount + " to " + to + ".");
 		}
 
@@ -108,9 +130,19 @@ public class money {
 	}
 
 	public static void getStatus() {
-		System.out.println("Status:");
+		System.out.println("Current holdings:");
 		for (String player : players.keySet())
 			System.out.println("  " + player + " \t$" + players.get(player));
+	}
+
+	public static void getPlayerStatus() {
+		System.out.print("Player? ");
+		String p = pad(in.nextLine());
+		if (players.keySet().contains(p))
+			System.out.println(p.trim() + " has $" + players.get(p) + ".");
+		else
+			System.out.println("Couldn't find player.");
+		System.out.println();
 	}
 
 	public static String pad(String input) {
