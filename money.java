@@ -13,9 +13,8 @@ public class money {
 		System.out.println("This is a simple program to track cash flow in Monopoly.");
 		setupSettings();
 		setupPlayers();
-		while (true) {
+		while (true)
 			getAttributes();
-		}
 	}
 
 	public static void setupSettings() {
@@ -29,7 +28,8 @@ public class money {
 		}
 		System.out.print("Show holdings on every transaction (yes, no)? ");
 		showStatus = in.nextLine().equals("yes") ? true : false;
-		if (!showStatus) System.out.println("Use 'status' instead to check holdings.");
+		if (showStatus) System.out.println("  Will show status of all players on each transaction.");
+		else System.out.println("  Use 'status' instead to check holdings.");
 	}
 
 	public static void setupPlayers() {
