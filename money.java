@@ -103,10 +103,8 @@ public class money {
 		} else if (to.equals("bank") || to.equals("Bank")) {
 			int current = players.get(pad(from));
 			current -= amount;
-			if (current < 0) {
+			if (current <= 0) {
 				System.out.println(from + " is BANKRUPT.");
-				getStatus();
-				System.exit(0);
 			}
 			players.put(pad(from), current);
 			if (showStatus) getStatus();
@@ -114,10 +112,8 @@ public class money {
 		} else {
 			int fromPlayer = players.get(pad(from));
 			fromPlayer -= amount;
-			if (fromPlayer < 0) {
+			if (fromPlayer <= 0) {
 				System.out.println(from + " is BANKRUPT.");
-				getStatus();
-				System.exit(0);
 			}
 			players.put(pad(from), fromPlayer);
 			int toPlayer = players.get(pad(to));
